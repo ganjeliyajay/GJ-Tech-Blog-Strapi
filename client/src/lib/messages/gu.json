@@ -1,0 +1,34 @@
+{
+  "Navbar": {
+    "home": "હોમ",
+    "blog": "બ્લોગ",
+    "about": "અમારા વિશે",
+    "language": "ભાષા"
+  },
+  "Hero": {
+    "badge": "GJ ટેક બ્લોગ",
+    "title": "શીખો. બનાવો. શેર કરો.",
+    "description": "વેબ ડેવલપમેન્ટ, React, Next.js, JavaScript અને આધુનિક ટેક્નોલોજી વિશે ઉપયોગી લેખો, ટ્યુટોરિયલ્સ અને માહિતી.",
+    "readMore": "વધુ વાંચો"
+  },
+  "Blog": {
+    "latestArticles": "નવીનતમ લેખો",
+    "exploreArticles": "અમારા લેખો જુઓ",
+    "description": "તમારી ડેવલપમેન્ટ સ્કિલ્સ સુધારવા માટે ઉપયોગી જ્ઞાન અને ટ્યુટોરિયલ્સ શોધો.",
+    "readMore": "વધુ વાંચો",
+    "featured": "વિશેષ",
+    "articles": "લેખો"
+  },
+  "Article": {
+    "featured":"વિશેષ",
+    "backToBlog": "બ્લોગ પર પાછા જાઓ",
+    "minRead": "મિનિટ વાંચન",
+    "introduction": "પરિચય",
+    "conclusion": "નિષ્કર્ષ",
+    "thanks": "આ લેખ વાંચવા બદલ આભાર."
+  },
+  "Footer": {
+    "tagline": "શીખો. બનાવો. શેર કરો.",
+    "copyright": "© 2026 GJ Blog. સર્વાધિકાર સુરક્ષિત."
+  }
+}
