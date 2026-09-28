@@ -1,0 +1,34 @@
+{
+  "Navbar": {
+    "home": "Home",
+    "blog": "Blog",
+    "about": "About",
+    "language": "Language"
+  },
+  "Hero": {
+    "badge": "GJ Tech Blog",
+    "title": "Learn. Build. Share.",
+    "description": "Practical articles, tutorials and ideas about web development, React, Next.js, JavaScript and modern technologies.",
+    "readMore": "Read More"
+  },
+  "Blog": {
+    "latestArticles": "Latest Articles",
+    "exploreArticles": "Explore Our Articles",
+    "description": "Discover practical knowledge and tutorials to improve your development skills.",
+    "readMore": "Read More",
+    "featured": "Featured",
+    "articles": "Articles"
+  },
+  "Article": {
+    "featured":"Featured",
+    "backToBlog": "Back to Blog",
+    "minRead": "min read",
+    "introduction": "Introduction",
+    "conclusion": "Conclusion",
+    "thanks": "Thanks for reading this article."
+  },
+  "Footer": {
+    "tagline": "Learn. Build. Share.",
+    "copyright": "© 2026 GJ Blog. All rights reserved."
+  }
+}

@@ -1,0 +1,34 @@
+{
+  "Navbar": {
+    "home": "होम",
+    "blog": "ब्लॉग",
+    "about": "हमारे बारे में",
+    "language": "भाषा"
+  },
+  "Hero": {
+    "badge": "GJ टेक ब्लॉग",
+    "title": "सीखें। बनाएं। साझा करें।",
+    "description": "वेब डेवलपमेंट, React, Next.js, JavaScript और आधुनिक तकनीकों के बारे में उपयोगी लेख, ट्यूटोरियल और जानकारी।",
+    "readMore": "और पढ़ें"
+  },
+  "Blog": {
+    "latestArticles": "नवीनतम लेख",
+    "exploreArticles": "हमारे लेख देखें",
+    "description": "अपने डेवलपमेंट कौशल को बेहतर बनाने के लिए उपयोगी जानकारी और ट्यूटोरियल खोजें।",
+    "readMore": "और पढ़ें",
+    "featured": "विशेष",
+    "articles": "लेख"
+  },
+  "Article": {
+    "featured":"विशेष",
+    "backToBlog": "ब्लॉग पर वापस जाएं",
+    "minRead": "मिनट पढ़ने का समय",
+    "introduction": "परिचय",
+    "conclusion": "निष्कर्ष",
+    "thanks": "इस लेख को पढ़ने के लिए धन्यवाद।"
+  },
+  "Footer": {
+    "tagline": "सीखें। बनाएं। साझा करें।",
+    "copyright": "© 2026 GJ Blog. सर्वाधिकार सुरक्षित।"
+  }
+}
