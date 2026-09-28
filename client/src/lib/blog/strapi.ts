@@ -6,6 +6,8 @@ if (!STRAPI_URL) {
   throw new Error("NEXT_PUBLIC_STRAPI_URL is not configured.")
 }
 
+console.log("STRAPI_URL:", STRAPI_URL)
+
 const VALID_LOCALES = new Set(["en", "hi", "gu"])
 
 function normalizeLocale(locale: string) {
@@ -33,6 +35,7 @@ export async function getAllPosts(locale: string) {
       `Error fetching Strapi posts for locale "${safeLocale}":`,
       error,
     )
+
     return null
   }
 }
@@ -63,6 +66,7 @@ export async function getPostBySlug(slug: string, locale: string) {
       `Error fetching Strapi post "${decodedSlug}" for locale "${safeLocale}":`,
       error,
     )
+
     return null
   }
 }
@@ -95,4 +99,29 @@ export async function getLocalizedPost(documentId: string, locale: string) {
 
     return null
   }
+}
+
+export function getStrapiMediaUrl(url?: string | null) {
+  if (!url) return ""
+
+  const cleanStrapiUrl = STRAPI_URL.replace(/\/$/, "")
+
+  // Old local Strapi URL
+  if (
+    url.startsWith("http://localhost:1337") ||
+    url.startsWith("http://127.0.0.1:1337") ||
+    url.startsWith("https://localhost:1337") ||
+    url.startsWith("https://127.0.0.1:1337")
+  ) {
+    const path = url.replace(/^https?:\/\/(localhost|127\.0\.0\.1):1337/, "")
+
+    return `${cleanStrapiUrl}${path}`
+  }
+
+  // Relative Strapi upload URL
+  if (url.startsWith("/")) {
+    return `${cleanStrapiUrl}${url}`
+  }
+
+  return url
 }

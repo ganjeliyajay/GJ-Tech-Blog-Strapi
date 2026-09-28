@@ -1,28 +1,30 @@
-import { Link } from "@/lib/i18n/navigation";
-import { getTranslations } from "next-intl/server";
-import { Blog } from "../../types/blog";
-import Image from "next/image";
+import Image from "next/image"
+import { getTranslations } from "next-intl/server"
+
+import { Link } from "@/lib/i18n/navigation"
+import { getStrapiMediaUrl } from "@/lib/blog/strapi"
+
+import { Blog } from "../../types/blog"
 
 export default async function BlogCard({
   title,
   excerpt,
   featured,
   slug,
-  coverImage
+  coverImage,
 }: Blog) {
-  const t = await getTranslations("Blog");
+  const t = await getTranslations("Blog")
+
+  const imageUrl = getStrapiMediaUrl(coverImage?.url)
+  console.log("FINAL IMAGE URL:", imageUrl)
 
   return (
     <article className="group overflow-hidden rounded-2xl border border-gray-200 bg-white transition duration-300 hover:-translate-y-1 hover:shadow-xl">
       <div className="relative h-52 overflow-hidden bg-gray-100">
-        {coverImage?.url ? (
+        {imageUrl ? (
           <Image
-            src={
-              coverImage.url.startsWith("http")
-                ? coverImage.url
-                : `${process.env.NEXT_PUBLIC_STRAPI_URL}${coverImage.url}`
-            }
-            alt={coverImage.alternativeText || title}
+            src={imageUrl}
+            alt={coverImage?.alternativeText || title}
             fill
             className="object-cover transition duration-500 group-hover:scale-105"
             sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
@@ -61,5 +63,5 @@ export default async function BlogCard({
         </Link>
       </div>
     </article>
-  );
+  )
 }

@@ -1,9 +1,8 @@
 import createNextIntlPlugin from "next-intl/plugin"
-import type { NextConfig } from "next"
 
 const withNextIntl = createNextIntlPlugin("./src/lib/i18n/request.ts")
 
-const nextConfig: NextConfig = {
+const nextConfig = {
   images: {
     remotePatterns: [
       {
@@ -18,6 +17,9 @@ const nextConfig: NextConfig = {
         pathname: "/uploads/**",
       },
     ],
+
+    // Only for local development.
+    dangerouslyAllowLocalIP: process.env.NODE_ENV === "development",
   },
 }
 

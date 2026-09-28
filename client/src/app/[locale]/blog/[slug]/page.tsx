@@ -1,59 +1,69 @@
-import Image from "next/image";
-import { Link } from "@/lib/i18n/navigation";
-import { notFound } from "next/navigation";
-import { getLocale, getTranslations } from "next-intl/server";
+import Image from "next/image"
+import { Link } from "@/lib/i18n/navigation"
+import { notFound } from "next/navigation"
+import { getLocale, getTranslations } from "next-intl/server"
 
-import { getPostBySlug } from "@/lib/blog/strapi";
-import StrapiBlocks from "../../../../../components/blog/StrapiBlocks";
+import { getPostBySlug, getStrapiMediaUrl } from "@/lib/blog/strapi"
+
+import StrapiBlocks from "../../../../../components/blog/StrapiBlocks"
 
 interface DescriptionChild {
-  text: string;
-  type: string;
+  text: string
+  type: string
 }
 
 interface DescriptionBlock {
-  type: string;
-  children: DescriptionChild[];
+  type: string
+  children: DescriptionChild[]
 }
 
 interface BlogData {
-  title: string;
-  excerpt: string;
-  description?: DescriptionBlock[];
-  slug: string;
-  featured?: boolean;
-  publishedAt: string;
+  title: string
+  excerpt: string
+  description?: DescriptionBlock[]
+  slug: string
+  featured?: boolean
+  publishedAt: string
   coverImage?: {
-    url: string;
-    alternativeText?: string | null;
-  } | null;
+    url: string
+    alternativeText?: string | null
+  } | null
 }
 
 interface BlogDetailsPageProps {
   params: Promise<{
-    slug: string;
-  }>;
+    slug: string
+  }>
 }
 
 export default async function BlogDetailsPage({
   params,
 }: BlogDetailsPageProps) {
-  const { slug } = await params;
-  const decodedSlug = decodeURIComponent(slug);
+  const { slug } = await params
 
-  const locale = await getLocale();
+  const decodedSlug = decodeURIComponent(slug).trim()
 
-  const post: BlogData | null = await getPostBySlug(decodedSlug, locale);
+  const locale = await getLocale()
 
-  console.log("BLOG CONTENT:", post);
+  const post: BlogData | null = await getPostBySlug(decodedSlug, locale)
+
+  console.log("BLOG CONTENT:", post)
 
   if (!post) {
-    notFound();
+    notFound()
   }
 
-  const t = await getTranslations("Article");
+  const t = await getTranslations("Article")
 
-  const imageUrl = post.coverImage?.url;
+  /*
+   * Convert:
+   * /uploads/image.png
+   * http://localhost:1337/uploads/image.png
+   * https://gj-tech-blog-strapi-db.onrender.com/uploads/image.png
+   *
+   * into the correct current Strapi URL.
+   */
+  const imageUrl = getStrapiMediaUrl(post.coverImage?.url)
 
   return (
     <main className="min-h-screen bg-white text-slate-900">
@@ -62,18 +72,13 @@ export default async function BlogDetailsPage({
         <div className="mx-auto max-w-4xl px-6 py-16 md:py-20">
           {/* Breadcrumb */}
           <div className="mb-8 flex items-center gap-2 text-sm text-slate-500">
-            <Link
-              href="/blog"
-              className="transition hover:text-blue-600"
-            >
+            <Link href="/blog" className="transition hover:text-blue-600">
               Blog
             </Link>
 
             <span>/</span>
 
-            <span className="truncate text-slate-400">
-              {post.title}
-            </span>
+            <span className="truncate text-slate-400">{post.title}</span>
           </div>
 
           {/* Featured */}
@@ -88,7 +93,7 @@ export default async function BlogDetailsPage({
             {post.title}
           </h1>
 
-          {/* Description */}
+          {/* Excerpt */}
           <p className="mt-6 text-lg leading-8 text-slate-600 md:text-xl">
             {post.excerpt}
           </p>
@@ -96,11 +101,14 @@ export default async function BlogDetailsPage({
           {/* Meta */}
           <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-3 text-sm text-slate-500">
             <span>
-              {new Date(post.publishedAt).toLocaleDateString("en-US", {
-                year: "numeric",
-                month: "long",
-                day: "numeric",
-              })}
+              {new Date(post.publishedAt).toLocaleDateString(
+                locale === "gu" ? "gu-IN" : locale === "hi" ? "hi-IN" : "en-US",
+                {
+                  year: "numeric",
+                  month: "long",
+                  day: "numeric",
+                },
+              )}
             </span>
 
             <span className="hidden h-1 w-1 rounded-full bg-slate-300 sm:block" />
@@ -119,13 +127,10 @@ export default async function BlogDetailsPage({
         <section className="mx-auto max-w-6xl px-6 py-10 md:py-14">
           <div className="relative aspect-[16/8] overflow-hidden rounded-3xl bg-slate-100">
             <Image
-              src={
-                imageUrl.startsWith("http")
-                  ? imageUrl
-                  : `${process.env.NEXT_PUBLIC_STRAPI_URL}${imageUrl}`
-              }
+              src={imageUrl}
               alt={post.coverImage?.alternativeText || post.title}
               fill
+              priority
               className="object-cover"
               sizes="(max-width: 1280px) 100vw, 1200px"
             />
@@ -136,26 +141,26 @@ export default async function BlogDetailsPage({
       {/* Article Content */}
       <article className="mx-auto max-w-3xl px-6 pb-20">
         <div className="prose prose-slate max-w-none">
-          <p className="text-lg leading-8 text-slate-700">
-            {post.excerpt}
-          </p>
+          {/* Intro Excerpt */}
+          <p className="text-lg leading-8 text-slate-700">{post.excerpt}</p>
 
+          {/* Introduction */}
           <h2 className="mt-12 text-3xl font-bold text-slate-900">
             {t("introduction")}
           </h2>
 
-         <StrapiBlocks description={post.description} />
+          {/* Strapi Description */}
+          <StrapiBlocks description={post.description} />
 
+          {/* Conclusion */}
           <h2 className="mt-12 text-3xl font-bold text-slate-900">
             {t("conclusion")}
           </h2>
 
-          <p className="mt-5 leading-8 text-slate-600">
-            {t("thanks")}
-          </p>
+          <p className="mt-5 leading-8 text-slate-600">{t("thanks")}</p>
         </div>
 
-        {/* Back */}
+        {/* Back to Blog */}
         <div className="mt-12 border-t border-slate-200 pt-8">
           <Link
             href="/blog"
@@ -166,5 +171,5 @@ export default async function BlogDetailsPage({
         </div>
       </article>
     </main>
-  );
+  )
 }
