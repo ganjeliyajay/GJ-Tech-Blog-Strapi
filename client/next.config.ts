@@ -1,8 +1,9 @@
+import type { NextConfig } from "next"
 import createNextIntlPlugin from "next-intl/plugin"
 
 const withNextIntl = createNextIntlPlugin("./src/lib/i18n/request.ts")
 
-const nextConfig = {
+const nextConfig: NextConfig = {
   images: {
     remotePatterns: [
       {
@@ -13,12 +14,10 @@ const nextConfig = {
       },
       {
         protocol: "https",
-        hostname: "gj-tech-blog-strapi-db.onrender.com",
+        hostname: "gj-tech-blog-strapi.onrender.com",
         pathname: "/uploads/**",
       },
     ],
-
-    // Only for local development.
     dangerouslyAllowLocalIP: process.env.NODE_ENV === "development",
   },
 }

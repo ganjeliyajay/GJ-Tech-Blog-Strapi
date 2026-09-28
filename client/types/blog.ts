@@ -1,5 +1,6 @@
 export interface Blog {
   id: string | number;
+    documentId: string;
   title: string;
   slug: string;
   featured?: boolean;
